@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Login — JioSignage</title>
+<meta name="description" content="Log in to JioSignage to manage and monitor your signage displays remotely, anytime, anywhere." />
+<link rel="icon" href="images/logo.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  /* ============ Tokens (from Figma nodes 26:33108 / 26:33158 / 26:33110 · JDS) ============ */
+  :root{
+    --primary:#0F3CC9;          /* Light/Primary/50 */
+    --primary-dark:#0A2885;     /* primary/60 */
+    --grey-100:#141414;
+    --grey-80:rgba(0,0,0,.65);  /* primary/grey-80 */
+    --grey-60:#B5B5B5;
+    --grey-40:#E0E0E0;
+    --grey-20:#F5F5F5;
+    --white:#FFFFFF;
+    --error:#FA2F40;
+    --error-text:#3E0006;
+    --success:#25AB21;
+    --sparkle-60:#1E7B74;
+    --sparkle-50:#1ECCB0;
+    --sparkle-20:#E8FAF7;
+    --periwinkle:#6464FF;
+    --font:'JioType','Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{font-family:var(--font);color:var(--grey-100);background:var(--primary);-webkit-font-smoothing:antialiased;line-height:1.5}
+  a{text-decoration:none;color:inherit}
+  button{font-family:inherit;cursor:pointer}
+  svg{display:block}
+  a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--white);outline-offset:2px;border-radius:6px}
+
+  /* ---------- Site header (kept on the sign-in page) ---------- */
+  .lp-header{display:flex;align-items:center;justify-content:space-between;gap:24px;height:72px;padding:0 48px}
+  .lp-brand{display:flex;align-items:center;gap:10px;color:#fff;font-weight:800;font-size:20px;letter-spacing:-.02em}
+  .lp-brand .dot{width:32px;height:32px;flex:none}
+  .lp-nav{display:flex;align-items:center;gap:32px}
+  .lp-nav a{color:#fff;font-size:16px;font-weight:700}
+  .lp-nav a:hover{color:#cfd6ff}
+  .lp-actions{display:flex;align-items:center;gap:12px}
+  .lp-cta{background:#fff;color:var(--grey-100);border-radius:1000px;padding:8px 16px;font-size:16px;font-weight:700;line-height:24px}
+  .lp-cta:hover{background:#e7ecfb}
+  @media(max-width:760px){.lp-nav{display:none}.lp-header{padding:0 20px}}
+
+  .auth{min-height:calc(100vh - 72px);display:grid;place-items:center;padding:32px 24px;position:relative;overflow:hidden}
+  .stage{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;gap:clamp(40px,7vw,116px);width:100%;max-width:1184px}
+
+  /* ---------- Left illustration (Figma: Jio dot-grid) ---------- */
+  .illus{width:min(560px,42vw);flex:none}
+  .illus svg{width:100%;height:auto}
+
+  /* ---------- Card ---------- */
+  .card{width:384px;max-width:100%;min-height:600px;background:var(--white);border-radius:32px;padding:32px;flex:none;display:flex;flex-direction:column;box-shadow:0 24px 64px rgba(0,0,20,.24)}
+  .view{flex:1;display:flex;flex-direction:column}
+  .view.hidden{display:none}
+
+  .heading{font-size:32px;font-weight:800;line-height:32px;letter-spacing:-.96px;color:var(--grey-100)}
+  .support{font-size:14px;font-weight:500;line-height:20px;letter-spacing:-.07px;color:var(--grey-80);margin-top:8px;max-width:320px}
+  .support b{font-weight:700;color:var(--grey-100)}
+
+  .fields{margin-top:20px;display:flex;flex-direction:column;flex:1}
+
+  /* JDS underlined field with floating label */
+  .jf{position:relative;padding-top:18px;margin-bottom:8px}
+  .jf input{width:100%;border:none;border-bottom:1.5px solid var(--grey-60);background:transparent;padding:8px 0;font-size:16px;font-weight:500;letter-spacing:-.08px;color:var(--grey-100);outline:none;font-family:inherit;transition:border-color .15s}
+  .jf.has-eye input{padding-right:40px}
+  .jf input::placeholder{color:transparent}
+  .jf label{position:absolute;left:0;top:26px;font-size:16px;font-weight:500;letter-spacing:-.08px;color:var(--grey-80);pointer-events:none;transition:top .15s,font-size .15s,color .15s}
+  .jf input:focus{border-bottom:2px solid var(--primary)}
+  .jf input:focus~label,.jf input:not(:placeholder-shown)~label{top:0;font-size:12px;color:var(--primary)}
+  .jf .eye{position:absolute;right:0;top:22px;background:none;border:none;color:var(--grey-80);width:32px;height:32px;display:grid;place-items:center;border-radius:8px}
+  .jf .eye:hover{color:var(--grey-100)}
+  .jf .eye svg{width:22px;height:22px}
+  .jf .fb{display:none;align-items:center;gap:6px;margin-top:8px;font-size:12px;font-weight:600;letter-spacing:-.06px;color:var(--error-text)}
+  .jf .fb svg{width:16px;height:16px;color:var(--error);flex:none}
+  .jf.error input{border-bottom-color:var(--error)}
+  .jf.error input:focus~label,.jf.error input:not(:placeholder-shown)~label{color:var(--error)}
+  .jf.error .fb{display:flex}
+
+  .forgot-row{display:flex;justify-content:flex-start;margin:10px 0 4px}
+  .link{font-size:14px;font-weight:700;letter-spacing:-.07px;color:var(--primary-dark);background:none;border:none;padding:0}
+  .link:hover{text-decoration:underline}
+
+  /* Remember me checkbox */
+  .remember{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:500;letter-spacing:-.07px;color:var(--grey-80);cursor:pointer;user-select:none;margin-top:8px}
+  .remember input{position:absolute;opacity:0;width:0;height:0}
+  .remember .box{width:16px;height:16px;flex:none;border:1px solid var(--grey-80);border-radius:4px;display:grid;place-items:center;transition:.15s}
+  .remember .box svg{width:12px;height:12px;color:#fff;opacity:0}
+  .remember input:checked+.box{background:var(--primary);border-color:var(--primary)}
+  .remember input:checked+.box svg{opacity:1}
+  .remember input:focus-visible+.box{outline:3px solid var(--primary);outline-offset:2px}
+
+  /* OTP boxes (Figma: 6 underlined digits) */
+  .otp-row{display:flex;gap:12px;margin-top:20px}
+  .otp-cell{flex:1}
+  .otp-cell input{width:100%;text-align:center;border:none;border-bottom:1.5px solid var(--grey-60);background:transparent;font-size:24px;font-weight:700;color:var(--grey-100);padding:6px 0;outline:none;font-family:inherit;transition:border-color .15s}
+  .otp-cell input::placeholder{color:var(--grey-60);font-weight:500}
+  .otp-cell input:focus{border-bottom:2px solid var(--primary)}
+  .otp-cell input.filled{border-bottom-color:var(--primary)}
+  .resend{font-size:14px;font-weight:500;letter-spacing:-.07px;color:var(--grey-80);margin-top:16px}
+  .resend button{font-family:inherit;font-size:14px;font-weight:700;color:var(--primary-dark);background:none;border:none;padding:0}
+  .resend button:disabled{color:var(--grey-60);cursor:default}
+  .resend button:not(:disabled):hover{text-decoration:underline}
+
+  .spacer{flex:1;min-height:16px}
+
+  .tnc{font-size:12px;font-weight:500;line-height:16px;letter-spacing:-.06px;color:var(--grey-80);max-width:320px;margin:0 auto 8px;text-align:center}
+  .tnc b{font-weight:700}
+
+  .btn{width:100%;border:none;background:var(--primary);color:#fff;font-size:16px;font-weight:700;letter-spacing:-.08px;line-height:24px;padding:12px 16px;border-radius:1000px;transition:background .18s,opacity .18s}
+  .btn:hover:not(:disabled){background:var(--primary-dark)}
+  .btn:disabled{opacity:.3;cursor:not-allowed}
+  .btn.ghost{background:transparent;color:var(--primary-dark);border:1px solid var(--grey-60)}
+  .btn.ghost:hover{background:var(--grey-20)}
+
+  .back-link{align-self:flex-start;display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:700;color:var(--primary-dark);background:none;border:none;padding:0;margin-bottom:16px}
+  .back-link:hover{text-decoration:underline}
+  .back-link svg{width:16px;height:16px}
+
+  .status-icon{width:64px;height:64px;border-radius:50%;background:var(--sparkle-20);color:var(--sparkle-60);display:grid;place-items:center;margin-bottom:20px}
+  .status-icon svg{width:32px;height:32px}
+
+
+  /* preview switch (demo aid) */
+  .preview-switch{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);display:flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--grey-40);border-radius:1000px;padding:6px 8px;box-shadow:0 12px 32px rgba(0,0,20,.24);flex-wrap:wrap;justify-content:center;max-width:94vw;z-index:20}
+  .preview-switch span{font-size:12px;font-weight:700;color:var(--grey-80);padding-left:8px}
+  .preview-switch button{border:none;background:var(--grey-20);color:var(--grey-100);font-size:12px;font-weight:700;padding:6px 12px;border-radius:1000px}
+  .preview-switch button:hover{background:#e7ecfb}
+  .preview-switch button.active{background:var(--primary);color:#fff}
+
+  @media (max-width:900px){
+    .illus{display:none}
+  }
+  @media (max-width:440px){
+    .card{padding:24px;border-radius:24px}
+    .auth{padding:24px 14px 90px}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header class="lp-header">
+  <a class="lp-brand" href="jiosignage-landing.html">
+    <img class="dot" src="images/logo.png" alt="JioSignage" />
+    JioSignage
+  </a>
+  <nav class="lp-nav" aria-label="Primary">
+    <a href="jiosignage-landing.html#product">Product</a>
+    <a href="features.html">Features</a>
+    <a href="jiosignage-landing.html#industries">Industries</a>
+    <a href="jiosignage-landing.html#platform">Platform</a>
+    <a href="jiosignage-landing.html#faq">FAQ</a>
+  </nav>
+  <div class="lp-actions">
+    <a class="lp-cta" href="jiosignage-landing.html#cta">Book a demo</a>
+  </div>
+</header>
+<div class="auth">
+  <div class="stage">
+    <!-- ===================== LEFT ILLUSTRATION (Jio dot-grid) ===================== -->
+    <div class="illus" aria-hidden="true">
+      <svg viewBox="0 0 620 680" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Jio">
+        <!-- row 0 -->
+        <circle cx="70"  cy="55"  r="30" fill="#6464FF"/>
+        <circle cx="190" cy="55"  r="30" fill="#6464FF"/>
+        <circle cx="310" cy="55"  r="30" fill="#0A2885"/>
+        <circle cx="430" cy="55"  r="30" fill="#6464FF"/>
+        <!-- row 1 -->
+        <circle cx="70"  cy="170" r="30" fill="#6464FF"/>
+        <circle cx="190" cy="170" r="30" fill="#1E7B74"/>
+        <circle cx="310" cy="170" r="30" fill="#0A2885"/>
+        <circle cx="430" cy="170" r="30" fill="#1E7B74"/>
+        <!-- row 2 (col1/col2 covered by badge) -->
+        <circle cx="310" cy="285" r="30" fill="#6464FF"/>
+        <circle cx="430" cy="285" r="30" fill="#0A2885"/>
+        <!-- row 3 (col1 covered by badge) -->
+        <circle cx="190" cy="400" r="30" fill="#1E7B74"/>
+        <circle cx="430" cy="400" r="30" fill="#0A2885"/>
+        <!-- row 4 -->
+        <circle cx="70"  cy="515" r="30" fill="#0A2885"/>
+        <circle cx="190" cy="515" r="30" fill="#1E7B74"/>
+        <circle cx="310" cy="515" r="30" fill="#0A2885"/>
+        <circle cx="430" cy="515" r="30" fill="#6464FF"/>
+        <!-- row 5 -->
+        <circle cx="70"  cy="630" r="30" fill="#6464FF"/>
+        <circle cx="190" cy="630" r="30" fill="#0A2885"/>
+        <circle cx="310" cy="630" r="30" fill="#0A2885"/>
+        <circle cx="430" cy="630" r="30" fill="#6464FF"/>
+        <!-- column 5 -->
+        <circle cx="550" cy="55"  r="30" fill="#1E7B74"/>
+        <circle cx="550" cy="170" r="30" fill="#6464FF"/>
+        <circle cx="550" cy="285" r="30" fill="#0A2885"/>
+        <circle cx="550" cy="400" r="30" fill="#6464FF"/>
+        <circle cx="550" cy="515" r="30" fill="#1E7B74"/>
+        <circle cx="550" cy="630" r="30" fill="#0A2885"/>
+        <!-- Jio logo badge -->
+        <circle cx="110" cy="342" r="92" fill="#0A2885"/>
+        <text x="110" y="342" fill="#fff" font-family="'JioType','Plus Jakarta Sans',sans-serif" font-size="66" font-weight="800" text-anchor="middle" dominant-baseline="central" letter-spacing="-2">Jio</text>
+      </svg>
+    </div>
+
+    <!-- ===================== CARD ===================== -->
+    <div class="card" id="card">
+
+      <!-- ---- LOGIN ---- -->
+      <section class="view" id="view-login">
+        <h2 class="heading">Log in</h2>
+        <p class="support">Manage and monitor your signage displays remotely anytime, anywhere.</p>
+
+        <form class="fields" id="loginForm" novalidate>
+          <div class="jf" id="jf-user">
+            <input id="username" type="text" placeholder=" " autocomplete="username" />
+            <label for="username">Username</label>
+            <div class="fb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><span id="fb-user">We couldn't find an account with that username.</span></div>
+          </div>
+
+          <div class="jf" id="jf-pass">
+            <input id="password" type="password" placeholder=" " autocomplete="current-password" />
+            <label for="password">Password</label>
+            <div class="fb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><span id="fb-pass">Incorrect password. Please try again.</span></div>
+          </div>
+
+          <div class="forgot-row"><button type="button" class="link" id="forgotLink">Forgot password?</button></div>
+
+          <label class="remember">
+            <input type="checkbox" id="remember" />
+            <span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg></span>
+            Remember me
+          </label>
+
+          <div class="spacer"></div>
+
+          <p class="tnc">By continuing, you agree to our <b>Terms of Service</b> and <b>Privacy &amp; Legal Policy</b></p>
+          <button class="btn" type="submit" id="getOtpBtn" disabled>Get OTP</button>
+        </form>
+      </section>
+
+      <!-- ---- OTP VERIFICATION ---- -->
+      <section class="view hidden" id="view-otp">
+        <button class="back-link" id="otpBack">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+          Back to login
+        </button>
+        <h2 class="heading">Verify your OTP</h2>
+        <p class="support">Enter the OTP sent to <b id="otpDest">+91-9028374659</b>.</p>
+
+        <form class="fields" id="otpForm" novalidate>
+          <div class="otp-row" id="otpRow">
+            <div class="otp-cell"><input type="text" inputmode="numeric" maxlength="1" placeholder="0" aria-label="OTP digit 1" /></div>
+            <div class="otp-cell"><input type="text" inputmode="numeric" maxlength="1" placeholder="0" aria-label="OTP digit 2" /></div>
+            <div class="otp-cell"><input type="text" inputmode="numeric" maxlength="1" placeholder="0" aria-label="OTP digit 3" /></div>
+            <div class="otp-cell"><input type="text" inputmode="numeric" maxlength="1" placeholder="0" aria-label="OTP digit 4" /></div>
+            <div class="otp-cell"><input type="text" inputmode="numeric" maxlength="1" placeholder="0" aria-label="OTP digit 5" /></div>
+            <div class="otp-cell"><input type="text" inputmode="numeric" maxlength="1" placeholder="0" aria-label="OTP digit 6" /></div>
+          </div>
+          <p class="resend" id="resendWrap">Resend OTP in <span id="resendTimer">00:20</span></p>
+
+          <div class="spacer"></div>
+
+          <button class="btn" type="submit" id="verifyBtn" disabled>Verify</button>
+        </form>
+      </section>
+
+      <!-- ---- FORGOT PASSWORD ---- -->
+      <section class="view hidden" id="view-forgot">
+        <button class="back-link" id="backToLogin">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+          Back to login
+        </button>
+        <h2 class="heading">Forgot password</h2>
+        <p class="support">Enter your registered email address to get link to reset password.</p>
+        <form class="fields" id="forgotForm" novalidate>
+          <div class="jf" id="jf-femail">
+            <input id="femail" type="email" placeholder=" " autocomplete="email" />
+            <label for="femail">Enter your email ID</label>
+            <div class="fb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><span>Please enter a valid email address.</span></div>
+          </div>
+          <div class="spacer"></div>
+          <button class="btn" type="submit" id="resetBtn" disabled>Submit</button>
+        </form>
+      </section>
+
+      <!-- ---- RESET LINK SENT ---- -->
+      <section class="view hidden" id="view-resetsent" style="text-align:center;align-items:center;justify-content:center">
+        <div class="status-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></div>
+        <h2 class="heading">Check your inbox</h2>
+        <p class="support" style="margin-left:auto;margin-right:auto">We've sent a password reset link to <b id="resetUser">your email</b>. It expires in 30 minutes.</p>
+        <div class="spacer"></div>
+        <button class="btn ghost" id="backToLogin3">Back to login</button>
+      </section>
+
+    </div>
+  </div>
+</div>
+
+<div class="preview-switch" aria-label="Preview login flows">
+  <span>Preview flows:</span>
+  <button data-state="default" class="active">Login</button>
+  <button data-state="otp">OTP</button>
+  <button data-state="forgot">Forgot password</button>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var VALID_USER="admin@jiosignage.com", VALID_PASS="jiosignage";
+
+  var views={
+    login:document.getElementById('view-login'),
+    otp:document.getElementById('view-otp'),
+    forgot:document.getElementById('view-forgot'),
+    resetsent:document.getElementById('view-resetsent')
+  };
+  function showView(name){Object.keys(views).forEach(function(k){views[k].classList.toggle('hidden',k!==name);});}
+
+  /* ---------- Login ---------- */
+  var jfUser=document.getElementById('jf-user'), jfPass=document.getElementById('jf-pass');
+  var username=document.getElementById('username'), password=document.getElementById('password');
+  var fbUser=document.getElementById('fb-user'), fbPass=document.getElementById('fb-pass');
+  var getOtpBtn=document.getElementById('getOtpBtn');
+
+  function refreshLoginBtn(){getOtpBtn.disabled=!(username.value.trim() && password.value.trim());}
+  function clearLoginErrors(){jfUser.classList.remove('error');jfPass.classList.remove('error');}
+
+  username.addEventListener('input',function(){jfUser.classList.remove('error');refreshLoginBtn();});
+  password.addEventListener('input',function(){jfPass.classList.remove('error');refreshLoginBtn();});
+
+  document.getElementById('loginForm').addEventListener('submit',function(e){
+    e.preventDefault();
+    clearLoginErrors();
+    var u=username.value.trim().toLowerCase(), p=password.value;
+    if(u!==VALID_USER){fbUser.textContent="We couldn't find an account with that username.";jfUser.classList.add('error');username.focus();return;}
+    if(p!==VALID_PASS){fbPass.textContent="Incorrect password. Please try again.";jfPass.classList.add('error');password.focus();return;}
+    goToOtp();
+  });
+
+  /* ---------- OTP ---------- */
+  var otpInputs=Array.prototype.slice.call(document.querySelectorAll('#otpRow input'));
+  var verifyBtn=document.getElementById('verifyBtn');
+  var resendWrap=document.getElementById('resendWrap'), resendTimer=document.getElementById('resendTimer');
+  var timerId=null;
+
+  function otpValue(){return otpInputs.map(function(i){return i.value;}).join('');}
+  function refreshVerifyBtn(){verifyBtn.disabled=otpValue().length!==6;}
+
+  otpInputs.forEach(function(inp,idx){
+    inp.addEventListener('input',function(){
+      inp.value=inp.value.replace(/[^0-9]/g,'').slice(0,1);
+      inp.classList.toggle('filled',!!inp.value);
+      if(inp.value && idx<otpInputs.length-1) otpInputs[idx+1].focus();
+      refreshVerifyBtn();
+    });
+    inp.addEventListener('keydown',function(e){
+      if(e.key==='Backspace' && !inp.value && idx>0){otpInputs[idx-1].focus();}
+    });
+    inp.addEventListener('paste',function(e){
+      e.preventDefault();
+      var d=(e.clipboardData||window.clipboardData).getData('text').replace(/[^0-9]/g,'').slice(0,6).split('');
+      otpInputs.forEach(function(x,i){x.value=d[i]||'';x.classList.toggle('filled',!!x.value);});
+      refreshVerifyBtn();
+      (otpInputs[d.length]||otpInputs[5]).focus();
+    });
+  });
+
+  function startResendTimer(){
+    var t=20; resendWrap.innerHTML='Resend OTP in <span id="resendTimer">00:20</span>';
+    var span=document.getElementById('resendTimer');
+    clearInterval(timerId);
+    timerId=setInterval(function(){
+      t--;
+      if(t<=0){
+        clearInterval(timerId);
+        resendWrap.innerHTML='Didn’t get the code? <button type="button" id="resendBtn">Resend OTP</button>';
+        document.getElementById('resendBtn').addEventListener('click',function(){startResendTimer();});
+      }else{
+        span.textContent='00:'+(t<10?'0':'')+t;
+      }
+    },1000);
+  }
+  function goToOtp(){
+    otpInputs.forEach(function(i){i.value='';i.classList.remove('filled');});
+    refreshVerifyBtn();
+    showView('otp'); setActive('otp'); startResendTimer();
+    setTimeout(function(){otpInputs[0].focus();},60);
+  }
+  document.getElementById('otpForm').addEventListener('submit',function(e){
+    e.preventDefault();
+    if(otpValue().length!==6) return;
+    clearInterval(timerId);
+    window.location.href='jiosignage-landing.html#dashboard';
+  });
+  document.getElementById('otpBack').addEventListener('click',function(){clearInterval(timerId);showView('login');setActive('default');});
+
+  /* ---------- Forgot password ---------- */
+  var femail=document.getElementById('femail'), jfFemail=document.getElementById('jf-femail'), resetBtn=document.getElementById('resetBtn');
+  var EMAIL_RE=/^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+  function refreshResetBtn(){resetBtn.disabled=!femail.value.trim();}
+  femail.addEventListener('input',function(){jfFemail.classList.remove('error');refreshResetBtn();});
+  document.getElementById('forgotLink').addEventListener('click',function(){showView('forgot');setActive('forgot');refreshResetBtn();});
+  document.getElementById('backToLogin').addEventListener('click',function(){showView('login');setActive('default');});
+  document.getElementById('backToLogin3').addEventListener('click',function(){showView('login');setActive('default');});
+  document.getElementById('forgotForm').addEventListener('submit',function(e){
+    e.preventDefault();
+    if(!EMAIL_RE.test(femail.value.trim())){jfFemail.classList.add('error');femail.focus();return;}
+    document.getElementById('resetUser').textContent=femail.value.trim();
+    showView('resetsent');setActive(null);
+  });
+
+  /* ---------- Preview flow switcher (demo aid) ---------- */
+  var switchBtns=document.querySelectorAll('.preview-switch button');
+  function setActive(state){switchBtns.forEach(function(b){b.classList.toggle('active',b.getAttribute('data-state')===state);});}
+  function applyState(state){
+    clearLoginErrors();
+    if(state==='default'){clearInterval(timerId);username.value='';password.value='';refreshLoginBtn();showView('login');}
+    else if(state==='otp'){goToOtp();}
+    else if(state==='forgot'){clearInterval(timerId);showView('forgot');refreshResetBtn();}
+  }
+  switchBtns.forEach(function(b){b.addEventListener('click',function(){var s=b.getAttribute('data-state');applyState(s);setActive(s);});});
+
+  refreshLoginBtn();
+})();
+</script>
+</body>
+</html>

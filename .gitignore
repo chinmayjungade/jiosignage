@@ -1,0 +1,10 @@
+# Publish ONLY the JioSignage marketing site.
+# Everything at the repo root is ignored, then the site files are re-included.
+/*
+!/index.html
+!/jiosignage-landing.html
+!/features.html
+!/login.html
+!/images/
+!/.gitignore
+!/DEPLOY.md
