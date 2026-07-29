@@ -217,6 +217,14 @@
   .chip .ico svg{width:22px;height:22px}
   @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(37,171,33,.5)}70%{box-shadow:0 0 0 8px rgba(37,171,33,0)}100%{box-shadow:0 0 0 0 rgba(37,171,33,0)}}
 
+  /* ---------- Engage · Inform · Inspire highlight ---------- */
+  .eii{padding:72px 0}
+  .eii-words{display:flex;justify-content:center;flex-wrap:wrap;gap:.08em .4em;font-weight:800;font-size:clamp(44px,8.5vw,108px);line-height:1;letter-spacing:-.04em;text-align:center}
+  .eii-words span{display:inline-block}
+  .eii-words span:nth-child(1){color:var(--grey-100)}
+  .eii-words span:nth-child(2){color:var(--primary-50)}
+  .eii-words span:nth-child(3){color:var(--sparkle-60)}
+
   /* ---------- Trusted-by marquee ---------- */
   .trusted{padding:44px 0;border-top:1px solid var(--grey-40);border-bottom:1px solid var(--grey-40)}
   .trusted p{text-align:center;font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--grey-80);margin-bottom:26px}
@@ -529,12 +537,6 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </a>
       </div>
-      <div class="hero-trust" data-reveal data-delay="3">
-        <div class="avatars" aria-hidden="true">
-          <span class="av">RC</span><span class="av">QB</span><span class="av">AP</span><span class="av">MC</span>
-        </div>
-        <p>Trusted by <b>500+ enterprises</b> managing <b>1M+ screens</b></p>
-      </div>
     </div>
 
     <div class="stage" data-reveal data-delay="2" aria-hidden="true">
@@ -571,6 +573,17 @@
         <div><span>Scheduled</span><small>4 campaigns today</small></div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ============================= ENGAGE · INFORM · INSPIRE ============================= -->
+<section class="eii" aria-label="Engage. Inform. Inspire.">
+  <div class="container">
+    <p class="eii-words">
+      <span data-reveal data-delay="1">Engage.</span>
+      <span data-reveal data-delay="2">Inform.</span>
+      <span data-reveal data-delay="3">Inspire.</span>
+    </p>
   </div>
 </section>
 
