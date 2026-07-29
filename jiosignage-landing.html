@@ -263,6 +263,22 @@
   .tint-amber{background:var(--warning-20);color:var(--secondary-inverse)}
   .tint-grey{background:var(--grey-20);color:var(--grey-100)}
 
+  /* Industries — tabbed showcase (Samsung VXT style) */
+  .itabs{max-width:920px;margin:0 auto}
+  .itab-bar{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-bottom:40px}
+  .itab{background:none;border:none;font-family:inherit;font-size:18px;font-weight:700;letter-spacing:-.02em;color:var(--grey-80);padding:8px 14px;position:relative;cursor:pointer;transition:color .2s}
+  .itab:hover{color:var(--grey-100)}
+  .itab.active{color:var(--grey-100)}
+  .itab.active::after{content:"";position:absolute;left:14px;right:14px;bottom:-6px;height:3px;background:var(--grey-100);border-radius:250px}
+  .itab-panel{display:none;text-align:center}
+  .itab-panel.active{display:block;animation:itabFade .45s ease}
+  @keyframes itabFade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  .itab-figure{aspect-ratio:16/9;max-width:760px;margin:0 auto;border-radius:var(--r-card);overflow:hidden;background:var(--grey-40);box-shadow:var(--shadow-md)}
+  .itab-figure img{width:100%;height:100%;object-fit:cover;display:block}
+  .itab-name{font-size:clamp(26px,3vw,36px);font-weight:800;letter-spacing:-.02em;color:var(--grey-100);margin-top:28px}
+  .itab-desc{font-size:17px;color:var(--grey-80);font-weight:500;max-width:620px;margin:14px auto 26px}
+  @media(max-width:560px){.itab{font-size:16px;padding:8px 8px}.itab-bar{gap:0}}
+
   /* Why choose — stats */
   .why{background:var(--primary-60);color:#fff}
   .why .h2,.why .lead{color:#fff}
@@ -712,22 +728,48 @@
 <section class="section overview" id="industries">
   <div class="container">
     <div class="section-head" data-reveal>
-      <h2 class="h2" style="margin-top:12px">Built for the way your industry communicates</h2>
-      <p class="lead">From a single café to a nationwide network, JioSignage adapts to how every sector engages its audience.</p>
+      <h2 class="h2">Industries that count on us</h2>
     </div>
-    <div class="ind-grid">
-      <article class="ind-card" data-reveal data-delay="1"><div class="ind-scene"><img src="images/industries/retail.png" alt="Digital signage for Retail chains" loading="lazy" onerror="this.remove()"></div><div class="ind-body"><h3>Retail chains</h3><p>Promote offers and pricing across every store in seconds.</p></div></article>
-      <article class="ind-card" data-reveal data-delay="2"><div class="ind-scene"><img src="images/industries/qsr.png" alt="Digital signage for QSR &amp; restaurants" loading="lazy" onerror="this.remove()"></div><div class="ind-body"><h3>QSR &amp; restaurants</h3><p>Dynamic digital menu boards that update with a click.</p></div></article>
-      <article class="ind-card" data-reveal data-delay="3"><div class="ind-scene"><img src="images/industries/hospitality.png" alt="Digital signage for Hospitality" loading="lazy" onerror="this.remove()"></div><div class="ind-body"><h3>Hospitality</h3><p>Wayfinding, events and guest experiences in lobbies.</p></div></article>
-      <article class="ind-card" data-reveal data-delay="1"><div class="ind-scene"><img src="images/industries/healthcare.png" alt="Digital signage for Healthcare" loading="lazy" onerror="this.remove()"></div><div class="ind-body"><h3>Healthcare</h3><p>Queue tokens, health tips and department directories.</p></div></article>
-      <article class="ind-card" data-reveal data-delay="2"><div class="ind-scene"><img src="images/industries/corporate.png" alt="Digital signage for Corporate offices" loading="lazy" onerror="this.remove()"></div><div class="ind-body"><h3>Corporate offices</h3><p>Internal comms, dashboards and reception screens.</p></div></article>
-      <article class="ind-card" data-reveal data-delay="3"><div class="ind-scene"><img src="images/industries/education.png" alt="Digital signage for Education" loading="lazy" onerror="this.remove()"></div><div class="ind-body"><h3>Education</h3><p>Campus notices, timetables and event announcements.</p></div></article>
-      <article class="ind-card" data-reveal data-delay="1"><div class="ind-scene"><img src="images/industries/manufacturing.png" alt="Digital signage for Manufacturing" loading="lazy" onerror="this.remove()"></div><div class="ind-body"><h3>Manufacturing</h3><p>Live production KPIs and safety messaging on the floor.</p></div></article>
-      <article class="ind-card" data-reveal data-delay="2"><div class="ind-scene"><img src="images/industries/banking.png" alt="Digital signage for Banking" loading="lazy" onerror="this.remove()"></div><div class="ind-body"><h3>Banking</h3><p>Rates, offers and queue management across branches.</p></div></article>
-      <article class="ind-card" data-reveal data-delay="1"><div class="ind-scene"><img src="images/industries/government.png" alt="Digital signage for Government" loading="lazy" onerror="this.remove()"></div><div class="ind-body"><h3>Government</h3><p>Citizen services, notices and public information.</p></div></article>
-      <article class="ind-card" data-reveal data-delay="2"><div class="ind-scene"><img src="images/industries/airports.png" alt="Digital signage for Airports" loading="lazy" onerror="this.remove()"></div><div class="ind-body"><h3>Airports</h3><p>Flight info, wayfinding and gate-level messaging.</p></div></article>
-      <article class="ind-card" data-reveal data-delay="3"><div class="ind-scene"><img src="images/industries/smart-cities.png" alt="Digital signage for Smart cities" loading="lazy" onerror="this.remove()"></div><div class="ind-body"><h3>Smart cities</h3><p>Transit, alerts and civic messaging at every touchpoint.</p></div></article>
-      <article class="ind-card" data-reveal data-delay="1"><div class="ind-scene"><img src="images/industries/kiosks-malls.png" alt="Digital signage for Kiosks &amp; malls" loading="lazy" onerror="this.remove()"></div><div class="ind-body"><h3>Kiosks &amp; malls</h3><p>Interactive directories and self-service touchpoints.</p></div></article>
+    <div class="itabs" data-reveal data-delay="1">
+      <div class="itab-bar" role="tablist" aria-label="Industries">
+        <button class="itab active" type="button" data-ind="restaurant" role="tab" aria-selected="true">Restaurant</button>
+        <button class="itab" type="button" data-ind="retail" role="tab" aria-selected="false">Retail</button>
+        <button class="itab" type="button" data-ind="corporate" role="tab" aria-selected="false">Corporate</button>
+        <button class="itab" type="button" data-ind="healthcare" role="tab" aria-selected="false">Healthcare</button>
+        <button class="itab" type="button" data-ind="grocery" role="tab" aria-selected="false">Grocery</button>
+      </div>
+      <div class="itab-body">
+        <div class="itab-panel active" data-ind="restaurant">
+          <div class="itab-figure"><img src="images/industries/restaurant.png" alt="Digital signage in a restaurant" loading="lazy" onerror="this.style.display='none'"></div>
+          <h3 class="itab-name">Restaurant</h3>
+          <p class="itab-desc">Digital menu boards lift average order value and spotlight high-margin items. Switch pricing and limited-time offers across every outlet in seconds, and use dayparting to move inventory.</p>
+          <a class="btn btn--primary btn--lg" href="#cta">Learn more</a>
+        </div>
+        <div class="itab-panel" data-ind="retail">
+          <div class="itab-figure"><img src="images/industries/retail.png" alt="Digital signage in a retail store" loading="lazy" onerror="this.style.display='none'"></div>
+          <h3 class="itab-name">Retail</h3>
+          <p class="itab-desc">Promote launches, offers and live pricing across every store from one dashboard. Bright in-store displays guide shoppers and drive impulse buys right at the point of decision.</p>
+          <a class="btn btn--primary btn--lg" href="#cta">Learn more</a>
+        </div>
+        <div class="itab-panel" data-ind="corporate">
+          <div class="itab-figure"><img src="images/industries/corporate.png" alt="Digital signage in a corporate office" loading="lazy" onerror="this.style.display='none'"></div>
+          <h3 class="itab-name">Corporate</h3>
+          <p class="itab-desc">Keep teams aligned with live dashboards, internal announcements and lobby wayfinding — all on-brand, updated centrally, and rolled out to every office at once.</p>
+          <a class="btn btn--primary btn--lg" href="#cta">Learn more</a>
+        </div>
+        <div class="itab-panel" data-ind="healthcare">
+          <div class="itab-figure"><img src="images/industries/healthcare.png" alt="Digital signage in a healthcare facility" loading="lazy" onerror="this.style.display='none'"></div>
+          <h3 class="itab-name">Healthcare</h3>
+          <p class="itab-desc">Guide patients with queue tokens, department directories and wayfinding, while sharing health tips that make crowded waiting areas feel shorter and calmer.</p>
+          <a class="btn btn--primary btn--lg" href="#cta">Learn more</a>
+        </div>
+        <div class="itab-panel" data-ind="grocery">
+          <div class="itab-figure"><img src="images/industries/grocery.png" alt="Digital signage in a grocery store" loading="lazy" onerror="this.style.display='none'"></div>
+          <h3 class="itab-name">Grocery</h3>
+          <p class="itab-desc">Highlight fresh deals, aisle promotions and dynamic pricing across your stores. Keep every offer current with screens and shelf-edge displays that update instantly.</p>
+          <a class="btn btn--primary btn--lg" href="#cta">Learn more</a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -1030,6 +1072,17 @@
     function restart(){clearInterval(timer);timer=setInterval(function(){go(cur+1);},5500);}
     restart();
   }
+
+  /* ---- Industries tabs ---- */
+  var itabs=document.querySelectorAll('.itab-bar .itab');
+  var ipanels=document.querySelectorAll('.itab-body .itab-panel');
+  itabs.forEach(function(t){
+    t.addEventListener('click',function(){
+      var ind=t.getAttribute('data-ind');
+      itabs.forEach(function(x){var on=x===t;x.classList.toggle('active',on);x.setAttribute('aria-selected',on?'true':'false');});
+      ipanels.forEach(function(p){p.classList.toggle('active',p.getAttribute('data-ind')===ind);});
+    });
+  });
 })();
 </script>
 </body>
