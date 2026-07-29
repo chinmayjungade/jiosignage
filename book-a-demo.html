@@ -445,9 +445,11 @@
     .foot-top{grid-template-columns:1fr 1fr}
   }
   /* ---------- Book a demo page ---------- */
+  body{min-height:100vh;display:flex;flex-direction:column}
+  main{flex:1 0 auto}
   .demo{padding-top:56px}
   .demo-grid{display:grid;grid-template-columns:1fr 1.05fr;gap:56px;align-items:start}
-  .demo-copy .lead{max-width:460px}
+  .demo-copy .lead{max-width:460px;margin-top:20px}
   .demo-list{margin-top:28px;display:grid;gap:14px}
   .demo-list li{display:flex;gap:12px;align-items:center;font-size:16px;font-weight:600;color:var(--grey-100)}
   .demo-list .ck{width:28px;height:28px;flex:none;border-radius:50%;background:var(--sparkle-20);display:grid;place-items:center;color:var(--sparkle-60)}
@@ -596,10 +598,6 @@
         <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg></span>Guidance on pricing, devices &amp; rollout</li>
         <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg></span>A tailored plan for all your locations</li>
       </ul>
-      <div class="demo-trust">
-        <div class="avatars" aria-hidden="true"><span>RC</span><span>QB</span><span>AP</span><span>MC</span></div>
-        <p>Trusted by <b>500+ enterprises</b> managing <b>1M+ screens</b></p>
-      </div>
     </div>
 
     <div class="demo-card" data-reveal data-delay="1">
