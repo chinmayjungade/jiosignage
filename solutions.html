@@ -461,8 +461,9 @@
   .wild-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
   .wild-card{border:1px solid var(--grey-40);border-radius:var(--r-card);overflow:hidden;background:#fff;transition:transform .2s ease,box-shadow .2s ease}
   .wild-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-md)}
-  .wild-fig{aspect-ratio:16/10;display:grid;place-items:center}
+  .wild-fig{aspect-ratio:16/10;display:grid;place-items:center;position:relative;overflow:hidden}
   .wild-fig svg{width:56px;height:56px}
+  .wild-fig img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
   .wild-body{padding:22px}
   .wild-cat{font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--primary-60)}
   .wild-body h3{font-size:18px;margin:8px 0 6px;color:var(--grey-100)}
@@ -680,15 +681,15 @@
     </div>
     <div class="wild-grid">
       <article class="wild-card" data-reveal data-delay="1">
-        <div class="wild-fig tint-primary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="12" rx="1"/><path d="M7 20h10M12 16v4"/></svg></div>
+        <div class="wild-fig tint-primary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="12" rx="1"/><path d="M7 20h10M12 16v4"/></svg><img src="images/solutions/led-walls.png" alt="Large-format LED walls" loading="lazy" onerror="this.remove()"></div>
         <div class="wild-body"><span class="wild-cat">Retail</span><h3>Large-format LED walls</h3><p>Curved LED walls spanning entire store fronts, delivering high-impact brand visuals at scale.</p></div>
       </article>
       <article class="wild-card" data-reveal data-delay="2">
-        <div class="wild-fig tint-sparkle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V11a8 8 0 0116 0v10M4 21h16M9 21v-6h6v6"/></svg></div>
+        <div class="wild-fig tint-sparkle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V11a8 8 0 0116 0v10M4 21h16M9 21v-6h6v6"/></svg><img src="images/solutions/entrance-displays.png" alt="Entrance and arch displays" loading="lazy" onerror="this.remove()"></div>
         <div class="wild-body"><span class="wild-cat">Fashion</span><h3>Entrance &amp; arch displays</h3><p>Architectural displays at store entrances that greet customers with the latest collections and campaigns.</p></div>
       </article>
       <article class="wild-card" data-reveal data-delay="3">
-        <div class="wild-fig tint-amber"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="3" width="12" height="15" rx="2"/><path d="M9 21h6M12 18v3M9 8h6"/></svg></div>
+        <div class="wild-fig tint-amber"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="3" width="12" height="15" rx="2"/><path d="M9 21h6M12 18v3M9 8h6"/></svg><img src="images/solutions/outdoor-kiosk.png" alt="Outdoor kiosk display" loading="lazy" onerror="this.remove()"></div>
         <div class="wild-body"><span class="wild-cat">Hospitality</span><h3>Outdoor kiosk displays</h3><p>Weatherproof outdoor kiosks in resort and hotel environments delivering premium guest information.</p></div>
       </article>
     </div>
